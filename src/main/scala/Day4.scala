@@ -3,14 +3,13 @@ import scala.util.Using
 
 object Day4 {
   def isValidV2(str: String): Boolean = {
-    val slidingStr = str.toSeq.sliding(2).map(_.unwrap)
+    val nonDecreasing = str.toSeq.sliding(2).map(_.unwrap).foldLeft(true) {
+      (curr, c) =>
+        val left = c(0).toInt
+        val right = c(1).toInt
+        val nonDecreasing = right >= left
 
-    val nonDecreasing = slidingStr.foldLeft(true) { (curr, c) =>
-      val left = c(0).toInt
-      val right = c(1).toInt
-      val nonDecreasing = right >= left
-
-      curr && nonDecreasing
+        curr && nonDecreasing
     }
 
     val hasSameAdjacentDigits =
